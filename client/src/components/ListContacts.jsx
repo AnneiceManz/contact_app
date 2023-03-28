@@ -31,7 +31,7 @@ const ListContacts= () => {
 
 
     //A function to control the update in the parent (student component)
-    const updateContact = (savedContact) => {
+    const onUpdateContact = (onSaveContact) => {
         // console.log("Line 29 savedStudent", savedStudent);
         // This function should update the whole list of students - 
         loadContacts();
@@ -51,9 +51,9 @@ const ListContacts= () => {
     }
 
     //A function to handle the Update functionality
-    const onUpdate = (toUpdateContact) => {
+    const onUpdate = (onUpdateContact) => {
         //console.log(toUpdateStudent);
-        setEditingContact(toUpdateStudent);
+        setEditingContact(onUpdateContact);
 
     }
 
@@ -61,7 +61,7 @@ const ListContacts= () => {
 
     return (
         <div className="mybody">
-        <div className="list-students">
+        <div className="list-contacts">
             <h2>Techtonica Participants </h2>
             <ul>
                 {contacts.map((contact) => {
@@ -69,7 +69,7 @@ const ListContacts= () => {
                 })}
             </ul>
         </div>
-        <MyForm key={editingContact? editingContact.id : null} onSaveContact={onSaveContact} editingContact={editingContact} onUpdateContact={updateContact} />
+        <MyForm key={editingContact? editingContact.id : null} onSaveContact={onSaveContact} editingContact={editingContact} onUpdateContact={onUpdateContact} />
         </div>
     );
 }

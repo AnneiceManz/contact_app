@@ -59,7 +59,7 @@ const MyForm = ({ onSaveContact, editingContact, onUpdateContact }) => {
             .then((data) => {
                 //console.log("From the post ", data);
                 //I'm sending data to the List of Students (the parent) for updating the list
-                onSaveStudent(data);
+                onSaveContact(data);
                 //this line just for cleaning the form
                 clearForm();
             });
@@ -76,7 +76,7 @@ const MyForm = ({ onSaveContact, editingContact, onUpdateContact }) => {
                 return response.json();
             })
             .then((data) => {
-                onUpdateStudent(data);
+                onUpdateContact(data);
                 //this line just for cleaning the form
                 clearForm();
             });
