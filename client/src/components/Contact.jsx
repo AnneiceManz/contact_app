@@ -14,7 +14,7 @@ const Contact = ({ contact, toUpdate, toDelete }) => {
   return (
     <Card>
       <Card.Content>
-        <Card.Header>{contact.name}</Card.Title>
+        <Card.Header>{contact.name}</Card.Header>
         <Button
           variant="outline-danger"
           onClick={() => {
@@ -34,7 +34,7 @@ const Contact = ({ contact, toUpdate, toDelete }) => {
           {" "}
           <ioicons.IoSync />
         </Button>
-      </Card.Body>
+      </Card.Content>
     </Card>
   );
 };
