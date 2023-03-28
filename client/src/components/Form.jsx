@@ -141,14 +141,21 @@ const MyForm = ({ onSaveContact, editingContact, onUpdateContact }) => {
             </Form.Group>
             <Form.Group>
                 <Form.Label>Birthday</Form.Label>
-                <input
-                    type="date"
+                {contact.id ? <input
+                    type="text"
                     id="add-user-birthday"
                     placeholder="Birthday"
                     required
                     value={contact.birthday}
                     onChange={handleBirthdayChange}
-                />
+                /> : <input
+                type="date"
+                id="add-user-birthday"
+                placeholder="Birthday"
+                required
+                value={contact.birthday}
+                onChange={handleBirthdayChange}
+            /> }
             </Form.Group>
             <Form.Group>
             <Button type="submit" variant="outline-success">{contact.id ? "Edit Contact" : "Add Contact"}</Button>
