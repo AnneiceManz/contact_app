@@ -66,7 +66,7 @@ const ListContacts = () => {
       />
         </div>
       <div className="list-contacts">
-        <h2>Techtonica Participants </h2>
+        <h2>Contacts</h2>
         <Card.Group>
           {contacts.map((contact) => (
                 <Contact
