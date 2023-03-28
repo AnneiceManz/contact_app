@@ -159,13 +159,13 @@ const MyForm = ({ onSaveContact, editingContact, onUpdateContact }) => {
             )}
           </Form.Group>
           <Form.Group>
-            <Button type="submit" variant="outline-success">
+            <Button type="submit" color="purple">
               {contact.id ? "Edit Contact" : "Add Contact"}
             </Button>
             {contact.id ? (
               <Button
                 type="button"
-                variant="outline-warning"
+                color="purple"
                 onClick={clearForm}
               >
                 Cancel

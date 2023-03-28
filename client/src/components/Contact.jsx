@@ -13,10 +13,10 @@ const Contact = ({ contact, toUpdate, toDelete }) => {
   };
 
   return (
-    <Card>
+    <Card centered>
       <Card.Content>
-        <Card.Header>{contact.name}</Card.Header>
-        <Card.Meta>{moment(contact.birthday).format('MMMM Do')}</Card.Meta>
+        <Card.Header className="contact_header">{contact.name}</Card.Header>
+        <Card.Meta className="contact_header">{moment(contact.birthday).format('MMMM Do')}</Card.Meta>
         <Card.Description>
             <strong>Phone:</strong> {contact.phone}
         </Card.Description>
@@ -28,25 +28,26 @@ const Contact = ({ contact, toUpdate, toDelete }) => {
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
+        <Button.Group size="mini" floated="right">
+
         <Button
           color="red"
           onClick={() => {
             onDelete(contact);
           }}
-          style={{ padding: "0.6em", marginRight: "0.9em" }}
         >
           <ioicons.IoTrash />
         </Button>
+        <Button.Or />
         <Button
           color="teal"
           onClick={() => {
             onUpdate(contact);
           }}
-          style={{ padding: "0.6em" }}
         >
-          {" "}
           <ioicons.IoSync />
         </Button>
+        </Button.Group>
       </Card.Content>
     </Card>
   );
