@@ -3,57 +3,57 @@ import * as ioicons from 'react-icons/io5'
 import MyForm from './Form';
 import Student from './Student';
 
-const ListStudents = () => {
+const ListContacts= () => {
 
     // this is my original state with an array of students 
-    const [students, setStudents] = useState([]);
+    const [contacts, setContacts] = useState([]);
 
     //this is the state needed for the UpdateRequest
-    const [editingStudent, setEditingStudent] = useState(null)
+    const [editingContact, setEditingContact] = useState(null)
 
-    const loadStudents = () => {
+    const loadContacts = () => {
         // A function to fetch the list of students that will be load anytime that list change
         fetch("http://localhost:8080/api/contacts")
             .then((response) => response.json())
-            .then((students) => {
-                setStudents(students);
+            .then((contacts) => {
+                setContacts(contacts);
             });
     }
 
     useEffect(() => {
-        loadStudents();
-    }, [students]);
+        loadContacts();
+    }, [contacts]);
 
-    const onSaveStudent = (newStudent) => {
+    const onSaveContact = (newContact) => {
         //console.log(newStudent, "From the parent - List of Students");
-        setStudents((students) => [...students, newStudent]);
+        setContacts((contacts) => [...contacts, newContact]);
     }
 
 
     //A function to control the update in the parent (student component)
-    const updateStudent = (savedStudent) => {
+    const updateContact = (savedContact) => {
         // console.log("Line 29 savedStudent", savedStudent);
         // This function should update the whole list of students - 
-        loadStudents();
+        loadContacts();
     }
 
     //A function to handle the Delete funtionality
-    const onDelete = (student) => {
+    const onDelete = (contact) => {
         //console.log(student, "delete method")
-        return fetch(`http://localhost:8080/api/students/${student.id}`, {
+        return fetch(`http://localhost:8080/api/contacts/${contact.id}`, {
             method: "DELETE"
         }).then((response) => {
             //console.log(response);
             if (response.ok) {
-                loadStudents();
+                loadContacts();
             }
         })
     }
 
     //A function to handle the Update functionality
-    const onUpdate = (toUpdateStudent) => {
+    const onUpdate = (toUpdateContact) => {
         //console.log(toUpdateStudent);
-        setEditingStudent(toUpdateStudent);
+        setEditingContact(toUpdateStudent);
 
     }
 
@@ -64,15 +64,15 @@ const ListStudents = () => {
         <div className="list-students">
             <h2>Techtonica Participants </h2>
             <ul>
-                {students.map((student) => {
-                    return <li key={student.id}> <Student student={student} toDelete={onDelete} toUpdate={onUpdate} /></li>
+                {contacts.map((contact) => {
+                    return <li key={contact.id}> <Contact contact={contact} toDelete={onDelete} toUpdate={onUpdate} /></li>
                 })}
             </ul>
         </div>
-        <MyForm key={editingStudent ? editingStudent.id : null} onSaveStudent={onSaveStudent} editingStudent={editingStudent} onUpdateStudent={updateStudent} />
+        <MyForm key={editingContact? editingContact.id : null} onSaveContact={onSaveContact} editingContact={editingContact} onUpdateContact={updateContact} />
         </div>
     );
 }
 
 
-export default ListStudents
+export default ListContacts
