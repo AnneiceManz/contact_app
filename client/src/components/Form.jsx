@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import { Button, Form } from "react-bootstrap";
 import { Card, Form, Button } from "semantic-ui-react";
 
 const MyForm = ({ onSaveContact, editingContact, onUpdateContact }) => {
