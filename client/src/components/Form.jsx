@@ -1,122 +1,181 @@
-import React, { useState, useEffect } from 'react'
-import { Button, Form } from "react-bootstrap"
+import React, { useState, useEffect } from "react";
+import { Card, Form, Button } from "semantic-ui-react";
 
-const MyForm = ({ onSaveStudent, editingStudent, onUpdateStudent }) => {
-
-    // This is the original State with not initial student 
-    const [student, setStudent] = useState(editingStudent || {
-        firstname: "",
-        lastname: "",
-        is_current: false
-    });
-
-    //create functions that handle the event of the user typing into the form
-    const handleNameChange = (event) => {
-        const firstname = event.target.value;
-        setStudent((student) => ({ ...student, firstname }));
-
-    };
-
-    const handleLastnameChange = (event) => {
-        const lastname = event.target.value;
-        setStudent((student) => ({ ...student, lastname }));
-    };
-
-    const handleCheckChange = (event) => {
-        const is_current = event.target.checked;
-        //console.log(iscurrent);
-        setStudent((student) => ({ ...student, is_current }));
-    };
-
-    const clearForm = () => {
-        setStudent({ firstname: "", lastname: "", is_current: false })
+const MyForm = ({ onSaveContact, editingContact, onUpdateContact }) => {
+  // This is the original State with not initial student
+  const [contact, setContact] = useState(
+    editingContact || {
+      name: "",
+      email: "",
+      phone: "",
+      address: "",
+      birthday: new Date(),
     }
+  );
 
-    //A function to handle the post request
-    const postStudent = (newStudent) => {
-        return fetch("http://localhost:8080/api/students", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(newStudent),
-        })
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                //console.log("From the post ", data);
-                //I'm sending data to the List of Students (the parent) for updating the list
-                onSaveStudent(data);
-                //this line just for cleaning the form
-                clearForm();
-            });
-    };
+  //create functions that handle the event of the user typing into the form
+  const handleNameChange = (event) => {
+    const name = event.target.value;
+    setContact((contact) => ({ ...contact, name }));
+  };
 
-    //A function to handle the post request
-    const putStudent = (toEditStudent) => {
-        return fetch(`http://localhost:8080/api/students/${toEditStudent.id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(toEditStudent),
-        })
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                onUpdateStudent(data);
-                //this line just for cleaning the form
-                clearForm();
-            });
-    };
+  const handleEmailChange = (event) => {
+    const email = event.target.value;
+    setContact((contact) => ({ ...contact, email }));
+  };
 
+  const handlePhoneChange = (event) => {
+    const phone = event.target.value;
+    //console.log(iscurrent);
+    setContact((contact) => ({ ...contact, phone }));
+  };
 
-    //A function to handle the submit in both cases - Post and Put request!
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (student.id) {
-            putStudent(student);
-        } else {
-            postStudent(student);
-        }
-    };
+  const handleAddressChange = (event) => {
+    const address = event.target.value;
+    //console.log(iscurrent);
+    setContact((contact) => ({ ...contact, address }));
+  };
 
-    return (
-        <Form className='form-students' onSubmit={handleSubmit}>
-            <Form.Group>
-                <Form.Label>First Name</Form.Label>
-                <input
-                    type="text"
-                    id="add-user-name"
-                    placeholder="First Name"
-                    required
-                    value={student.firstname}
-                    onChange={handleNameChange}
-                />
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Last Name</Form.Label>
-                <input
-                    type="text"
-                    id="add-user-lastname"
-                    placeholder="Last Name"
-                    required
-                    value={student.lastname}
-                    onChange={handleLastnameChange}
-                />
-            </Form.Group>
-            <Form.Check
-                type={'checkbox'}
-                id={`isCurrent`}
-                checked={student.is_current}
-                onChange={handleCheckChange}
-                label={`Are they in the current program?`}
+  const handleBirthdayChange = (event) => {
+    const birthday = event.target.value;
+    //console.log(iscurrent);
+    setContact((contact) => ({ ...contact, birthday }));
+  };
+
+  const clearForm = () => {
+    setContact({ name: "", email: "", phone: "", address: "", birthday: "" });
+  };
+
+  //A function to handle the post request
+  const postContact = (newContact) => {
+    return fetch("http://localhost:8080/api/contacts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newContact),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        //console.log("From the post ", data);
+        //I'm sending data to the List of Students (the parent) for updating the list
+        onSaveContact(data);
+        //this line just for cleaning the form
+        clearForm();
+      });
+  };
+
+  //A function to handle the post request
+  const putContact = (toEditContact) => {
+    return fetch(`http://localhost:8080/api/contacts/${toEditContact.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(toEditContact),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        onUpdateContact(data);
+        //this line just for cleaning the form
+        clearForm();
+      });
+  };
+
+  //A function to handle the submit in both cases - Post and Put request!
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (contact.id) {
+      putContact(contact);
+    } else {
+      postContact(contact);
+    }
+  };
+
+  return (
+    <Card>
+      <Card.Content>
+        <Card.Header>Add/Update Contact</Card.Header>
+        <Form className="form-contacts" onSubmit={handleSubmit}>
+          <Form.Group widths="equal">
+            <Form.Input
+              width={4}
+              label="Name"
+              type="text"
+              id="add-user-name"
+              required
+              value={contact.name}
+              onChange={handleNameChange}
             />
-            <Form.Group>
-            <Button type="submit" variant="outline-success">{student.id ? "Edit Student" : "Add Student"}</Button>
-            {student.id ? <Button type="button" variant="outline-warning" onClick={clearForm}>Cancel</Button> : null}
-            </Form.Group>
+            <Form.Input
+              width={4}
+              label="Email"
+              type="text"
+              id="add-user-email"
+              required
+              value={contact.email}
+              onChange={handleEmailChange}
+            />
+          </Form.Group>
+          <Form.Group widths="equal">
+            <Form.Input
+              width={4}
+              label="Phone"
+              type="text"
+              id="add-user-phone"
+              required
+              value={contact.phone}
+              onChange={handlePhoneChange}
+            />
+            <Form.Input
+              width={4}
+              label="Address"
+              type="text"
+              id="add-user-address"
+              required
+              value={contact.address}
+              onChange={handleAddressChange}
+            />
+          </Form.Group>
+          <Form.Group>
+            {contact.id ? (
+              <Form.Input
+                label="Birthday"
+                type="text"
+                id="add-user-birthday"
+                required
+                value={contact.birthday}
+                onChange={handleBirthdayChange}
+              />
+            ) : (
+              <Form.Input
+                label="Birthday"
+                type="date"
+                id="add-user-birthday"
+                required
+                value={contact.birthday}
+                onChange={handleBirthdayChange}
+              />
+            )}
+          </Form.Group>
+          <Form.Group>
+            <Button type="submit" color="purple">
+              {contact.id ? "Edit Contact" : "Add Contact"}
+            </Button>
+            {contact.id ? (
+              <Button
+                type="button"
+                color="purple"
+                onClick={clearForm}
+              >
+                Cancel
+              </Button>
+            ) : null}
+          </Form.Group>
         </Form>
-    );
+      </Card.Content>
+    </Card>
+  );
 };
 
-
-export default MyForm
+export default MyForm;
